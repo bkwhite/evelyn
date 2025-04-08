@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 type Message = {
+	id: string;
 	content: string;
 	sender: 'user' | 'assistant';
 	timestamp: string;
@@ -13,24 +14,30 @@ type Conversation = {
 };
 
 interface ChatState {
+	draft: string;
 	conversations: Conversation[];
 	activeConversationId: string | null;
+	setDraft: (draft: string) => void;
 	setActiveConversationId: (id: string | null) => void;
 	addConversation: (conversation: Conversation) => void;
 	addMessage: (conversationId: string, message: Message) => void;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
+	draft: '',
 	conversations: [],
 	activeConversationId: null,
+	setDraft: (draft) => set({ draft }),
 	setActiveConversationId: (id) => set({ activeConversationId: id }),
 	addConversation: (conversation) =>
 		set((state) => ({
+			draft: '',
 			conversations: [...state.conversations, conversation],
 			activeConversationId: conversation.id
 		})),
 	addMessage: (conversationId, message) =>
 		set((state) => ({
+			draft: '',
 			conversations: state.conversations.map((conversation) =>
 				conversation.id === conversationId
 					? { ...conversation, messages: [...conversation.messages, message] }
@@ -49,6 +56,7 @@ export function createConversation(message: Message): Conversation {
 
 export function createMessage(content: string, sender: 'user' | 'assistant'): Message {
 	return {
+		id: crypto.randomUUID(),
 		content,
 		sender,
 		timestamp: new Date().toISOString()

@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useEditable } from 'use-editable';
 
 type Props = {
+	editorRef: React.RefObject<HTMLDivElement | null>;
 	placeholder: string;
 	content: string;
 	onContentChange(value: string): void;
 };
 
-export default function Editable({ placeholder, content, onContentChange }: Props) {
-	const editorRef = useRef<HTMLDivElement>(null);
-
+export default function Editable({ editorRef, placeholder, content, onContentChange }: Props) {
 	useEditable(editorRef, onContentChange);
 
 	const handleFocus = () => {
