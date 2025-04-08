@@ -1,26 +1,96 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+	/* Dark Mode Palette */
+	--t-bg-primary: #121212; /* Main background */
+	--t-bg-secondary: #1e1e1e; /* Cards, containers, elements */
+	--t-bg-tertiary: #2d2d2d; /* Elevated elements */
+	--t-bg-input: #666666; /* Input fields */
+	--t-bg-input-placeholder: #777777; /* Input fields hover */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--t-text-primary: #e0e0e0; /* Main text */
+	--t-text-secondary: #a0a0a0; /* Secondary text */
+	--t-text-tertiary: #6c6c6c; /* Disabled text */
+	--t-text-input: #ffffff; /* Input text */
+
+	--t-accent-primary: #bb86fc; /* Primary accent */
+	--t-accent-secondary: #03dac6; /* Secondary accent */
+	--t-accent-warning: #cf6679; /* Error/warning */
+
+	--t-border: #333333; /* Borders */
+	--t-shadow: rgba(0, 0, 0, 0.3); /* Shadows */
+
+	/* Theme colors */
+	--background: #121212;
+	--foreground: #e0e0e0;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #121212;
+		--foreground: #e0e0e0;
+	}
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+}
+
+html {
+	height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	height: 100%;
+}
+
+.c-main {
+	background: var(--t-bg-primary);
+	color: var(--t-text-primary);
+}
+
+.c-surface {
+	background: var(--t-bg-secondary);
+	color: var(--t-text-primary);
+}
+
+.c-elevated {
+	background: var(--t-bg-tertiary);
+	color: var(--t-text-secondary);
+}
+
+button.c-elevated {
+	color: var(--t-text-primary);
+}
+
+button.c-elevated:hover {
+	background: var(--t-bg-secondary);
+}
+
+.c-input {
+	background: var(--t-text-primary);
+	color: var(--t-bg-primary);
+}
+
+h3 {
+	font-weight: 700;
+	font-size: 3.5rem;
+}
+
+.editable-div {
+	outline: none;
+}
+
+.editable-div.placeholder:empty:before {
+	content: attr(data-placeholder);
+	color: var(--t-bg-input-placeholder);
+	font-style: italic;
+	pointer-events: none;
 }
