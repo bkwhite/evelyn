@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
-type Message = {
+export type Message = {
 	id: string;
 	content: string;
 	sender: 'user' | 'assistant';
 	timestamp: string;
 };
 
-type Conversation = {
+export type Conversation = {
 	id: string;
 	title: string;
 	messages: Message[];

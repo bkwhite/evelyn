@@ -34,7 +34,7 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 		if (editorRef.current && editorRef.current.textContent === '') {
 			editorRef.current.classList.add('placeholder');
 		}
-	}, []);
+	}, [editorRef]);
 
 	return (
 		<div

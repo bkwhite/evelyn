@@ -3,10 +3,10 @@ import Sidebar from '@/components/sidebar';
 
 export default function Home() {
 	return (
-		<div className="h-full flex justify-items-center font-[family-name:var(--font-geist-sans)] min-h-screen">
-			<main className="flex flex-row w-full h-full">
+		<div className="h-screen flex overflow-hidden font-[family-name:var(--font-geist-sans)]">
+			<main className="flex flex-row w-full h-full overflow-hidden">
 				<Sidebar />
-				<Chat className="w-full min-w-0" />
+				<Chat className="w-full min-w-0 flex-1" />
 			</main>
 		</div>
 	);
