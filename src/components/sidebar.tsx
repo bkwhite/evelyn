@@ -15,7 +15,7 @@ export default function Sidebar() {
 
 	return (
 		<div
-			className={cn('c-surface fixed md:sticky md:block', {
+			className={cn('c-surface fixed md:sticky md:block z-20', {
 				'w-full h-full md:w-72': sidebarOpen,
 				'md:w-18 hidden': !sidebarOpen
 			})}>

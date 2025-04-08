@@ -18,7 +18,7 @@
 	--t-accent-warning: #cf6679; /* Error/warning */
 
 	--t-border: #333333; /* Borders */
-	--t-shadow: rgba(0, 0, 0, 0.3); /* Shadows */
+	--t-shadow: rgba(0, 0, 0, 0.9); /* Shadows */
 
 	/* Theme colors */
 	--background: #121212;
@@ -51,6 +51,11 @@ body {
 	font-size: 16px;
 }
 
+h3 {
+	font-weight: 700;
+	font-size: 3.5rem;
+}
+
 .c-main {
 	background: var(--t-bg-primary);
 	color: var(--t-text-primary);
@@ -79,9 +84,9 @@ button.c-elevated:hover {
 	color: var(--t-bg-primary);
 }
 
-h3 {
-	font-weight: 700;
-	font-size: 3.5rem;
+.scrollable {
+	scrollbar-color: var(--t-bg-secondary) var(--t-bg-primary);
+	scrollbar-width: thin;
 }
 
 .editable-div {
@@ -93,4 +98,12 @@ h3 {
 	color: var(--t-bg-input-placeholder);
 	font-style: italic;
 	pointer-events: none;
+}
+
+.top-shadow {
+	box-shadow: 0 -8px 16px 4px #121212;
+}
+
+.bottom-shadow {
+	box-shadow: 0 4px 20px 4px #121212;
 }
