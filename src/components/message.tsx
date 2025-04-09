@@ -10,10 +10,10 @@ export default function Message({ message }: MessageProps) {
 	return (
 		<div
 			className={cn(
-				'c-surface rounded-2xl p-4 w-full md:max-w-[60%] whitespace-pre-wrap break-words wrap-break-word flex flex-col gap-2',
+				'c-surface rounded-2xl p-4 w-fit md:max-w-[60%] whitespace-pre-wrap wrap-break-word flex flex-col gap-2',
 				{
-					'self-end rounded-br-none': message?.sender === 'user',
-					'self-start rounded-bl-none': message?.sender === 'assistant'
+					'c-surface self-end rounded-br-none': message?.sender === 'user',
+					'c-elevated self-start rounded-bl-none': message?.sender === 'assistant'
 				}
 			)}>
 			<div className="flex flex-row gap-2">

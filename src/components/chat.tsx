@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useHotkeys } from 'react-hotkeys-hook';
 import { IoSend } from 'react-icons/io5';
@@ -10,12 +10,16 @@ import IconButton from './icon-button';
 import { createConversation, createMessage, useChatStore } from '@/chatStore';
 import MenuButton from './menu-button';
 import Message from './message';
+import { promptGemini } from '@/server/actions';
+
+const TALK_TO_GEMINI = false;
 
 function Chat(props: { className?: string }) {
 	const { className } = props;
 
 	const editorRef = useRef<HTMLPreElement>(null);
 	const messageContainerRef = useRef<HTMLDivElement>(null);
+	const [awaitingResponse, setAwaitingResponse] = useState(false);
 
 	const draft = useChatStore((state) => state.draft);
 	const setDraft = useChatStore((state) => state.setDraft);
@@ -87,6 +91,22 @@ function Chat(props: { className?: string }) {
 			addMessage(activeConversationId, message);
 		}
 
+		setAwaitingResponse(true);
+
+		if (TALK_TO_GEMINI) {
+			// currently broken, need to try after convo is created
+			promptGemini(message.content)
+				.then((response) => {
+					console.log(response, activeConversationId);
+					if (response && activeConversationId) {
+						addMessage(activeConversationId, createMessage(response, 'assistant'));
+					}
+				})
+				.finally(() => {
+					setAwaitingResponse(false);
+				});
+		}
+
 		setTimeout(() => {
 			editorRef.current?.dispatchEvent(
 				new Event('submit', {
@@ -105,7 +125,7 @@ function Chat(props: { className?: string }) {
 				<h2 className="text-xl font-semibold">Evelyn</h2>
 			</div>
 
-			<section className="flex flex-col flex-1 overflow-hidden">
+			<section className="flex flex-col flex-1 overflow-hidden md:self-center md:w-[90%] lg:w-[60%]">
 				{!activeConversation ? (
 					<div className="flex items-center justify-center flex-1 mt-48">
 						<h3>Howdy!</h3>
@@ -119,11 +139,21 @@ function Chat(props: { className?: string }) {
 								{activeConversation.messages.map((message) => (
 									<Message key={message.id} message={message} />
 								))}
+								{awaitingResponse ? (
+									<Message
+										message={{
+											id: crypto.randomUUID(),
+											content: '...',
+											sender: 'assistant',
+											timestamp: new Date().toISOString()
+										}}
+									/>
+								) : null}
 							</div>
 						</div>
 					) : null}
 
-					<div className="flex flex-col c-input cursor-text p-4 m-6 mt-0 text-sm rounded top-shadow z-10">
+					<div className="flex flex-col c-input cursor-text p-4 m-6 mt-0 text-sm rounded rounded-t-none top-shadow z-10">
 						<Editable
 							editorRef={editorRef}
 							placeholder="What's on your mind?"
