@@ -7,6 +7,8 @@ type MessageProps = {
 };
 
 export default function Message({ message }: MessageProps) {
+	console.log('render message', message.id);
+
 	return (
 		<div
 			className={cn(

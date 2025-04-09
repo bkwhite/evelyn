@@ -91,9 +91,9 @@ function Chat(props: { className?: string }) {
 			addMessage(activeConversationId, message);
 		}
 
-		setAwaitingResponse(true);
-
 		if (TALK_TO_GEMINI) {
+			setAwaitingResponse(true);
+
 			// currently broken, need to try after convo is created
 			promptGemini(message.content)
 				.then((response) => {
