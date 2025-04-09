@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 type Props = {
-	editorRef: React.RefObject<HTMLDivElement | null>;
+	editorRef: React.RefObject<HTMLPreElement | null>;
 	placeholder: string;
 	content: string;
 	onContentChange(value: string): void;
@@ -38,27 +38,39 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 		}
 	};
 
-	// Handle input changes
-	const handleInput = (event: React.FormEvent<HTMLDivElement>) => {
-		const target = event.target as HTMLDivElement;
+	const setContent = (target: HTMLPreElement) => {
 		const newContent = target.textContent || '';
 
-		// Only update if content has changed
 		if (newContent !== localContent.current) {
 			localContent.current = newContent;
 			onContentChange(newContent);
 		}
 	};
 
-	// Handle paste to strip formatting
+	// Handle input changes
+	const handleInput = (event: React.FormEvent<HTMLPreElement>) => {
+		setContent(event.target as HTMLPreElement);
+	};
+
 	const handlePaste = (event: React.ClipboardEvent) => {
 		event.preventDefault();
 
-		// Get plain text from clipboard
 		const text = event.clipboardData.getData('text/plain');
+		const selection = window.getSelection();
 
-		// Insert at cursor position
-		document.execCommand('insertText', false, text);
+		if (!selection || !selection.rangeCount) return;
+
+		const range = selection.getRangeAt(0);
+		const textNode = document.createTextNode(text);
+
+		range.deleteContents();
+		range.insertNode(textNode);
+		range.setStartAfter(textNode);
+		range.setEndAfter(textNode);
+		selection.removeAllRanges();
+		selection.addRange(range);
+
+		setContent(event.target as HTMLPreElement);
 	};
 
 	const handleSubmit = (event: React.FormEvent) => {
@@ -90,7 +102,7 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 	}, [editorRef, content, isInitialized]);
 
 	return (
-		<div
+		<pre
 			className="editable-div min-h-[2rem]"
 			contentEditable
 			suppressContentEditableWarning

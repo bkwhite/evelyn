@@ -1,3 +1,5 @@
+import cn from 'classnames';
+
 import { Message as MessageType } from '@/chatStore';
 
 type MessageProps = {
@@ -7,9 +9,15 @@ type MessageProps = {
 export default function Message({ message }: MessageProps) {
 	return (
 		<div
-			className={`c-surface rounded-lg p-4 flex flex-col gap-2 ${message?.sender === 'user' ? 'self-end' : 'self-start'}`}>
+			className={cn(
+				'c-surface rounded-2xl p-4 w-full md:max-w-[60%] whitespace-pre-wrap break-words wrap-break-word flex flex-col gap-2',
+				{
+					'self-end rounded-br-none': message?.sender === 'user',
+					'self-start rounded-bl-none': message?.sender === 'assistant'
+				}
+			)}>
 			<div className="flex flex-row gap-2">
-				<p className="text-sm text-secondary">{message.content}</p>
+				<pre className="text-sm text-secondary">{message.content}</pre>
 			</div>
 		</div>
 	);

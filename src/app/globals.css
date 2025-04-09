@@ -5,9 +5,11 @@
 	--t-bg-primary: #121212; /* Main background */
 	--t-bg-secondary: #1e1e1e; /* Cards, containers, elements */
 	--t-bg-tertiary: #2d2d2d; /* Elevated elements */
+	--t-bg-accent: #3c3c3c; /* Accent background */
 	--t-bg-input: #666666; /* Input fields */
 	--t-bg-input-placeholder: #777777; /* Input fields hover */
 
+	--t-text-dark: #101010;
 	--t-text-primary: #e0e0e0; /* Main text */
 	--t-text-secondary: #a0a0a0; /* Secondary text */
 	--t-text-tertiary: #6c6c6c; /* Disabled text */
@@ -56,6 +58,11 @@ h3 {
 	font-size: 3.5rem;
 }
 
+pre {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
 .c-main {
 	background: var(--t-bg-primary);
 	color: var(--t-text-primary);
@@ -77,6 +84,14 @@ button.c-elevated {
 
 button.c-elevated:hover {
 	background: var(--t-bg-secondary);
+}
+
+button.c-flush:hover {
+	background: var(--t-bg-tertiary);
+}
+
+button.c-flush.active {
+	background: var(--t-bg-accent);
 }
 
 .c-input {

@@ -14,14 +14,13 @@ import Message from './message';
 function Chat(props: { className?: string }) {
 	const { className } = props;
 
-	const editorRef = useRef<HTMLDivElement>(null);
+	const editorRef = useRef<HTMLPreElement>(null);
 	const messageContainerRef = useRef<HTMLDivElement>(null);
 
 	const draft = useChatStore((state) => state.draft);
 	const setDraft = useChatStore((state) => state.setDraft);
 	const activeConversationId = useChatStore((state) => state.activeConversationId);
 	const conversations = useChatStore((state) => state.conversations);
-	const setActiveConversationId = useChatStore((state) => state.setActiveConversationId);
 	const addConversation = useChatStore((state) => state.addConversation);
 	const addMessage = useChatStore((state) => state.addMessage);
 
@@ -34,25 +33,12 @@ function Chat(props: { className?: string }) {
 		(event) => {
 			event.preventDefault();
 
-			if (draft.trim() !== '' && !draft.trim().includes('\n')) {
+			if (draft.trim() !== '') {
 				onSend();
-			} else {
-				//console.log(JSON.stringify(draft));
-				//console.log(draft.trim() !== '');
-				//console.log(!draft.includes('\n'));
 			}
 		},
 		{ enableOnContentEditable: true },
 		[draft, editorRef]
-	);
-
-	useHotkeys(
-		'ctrl+v,cmd+v',
-		(event) => {
-			event.preventDefault();
-			console.log('took over paste');
-		},
-		[]
 	);
 
 	// Effect to scroll to bottom when messages change - with smart scrolling behavior
@@ -79,7 +65,7 @@ function Chat(props: { className?: string }) {
 				});
 			}
 		}
-	}, [activeConversation?.messages]); // This triggers when messages change
+	}, [activeConversation, activeConversation?.messages]); // This triggers when messages change
 
 	const onChange = (value: string) => {
 		if (value.trim() === '') {

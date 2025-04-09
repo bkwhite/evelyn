@@ -10,8 +10,17 @@ import IconButton from '@/components/icon-button';
 import MenuButton from '@/components/menu-button';
 
 export default function Sidebar() {
+	const activeConversationId = useChatStore((state) => state.activeConversationId);
 	const conversations = useChatStore((state) => state.conversations);
 	const sidebarOpen = useUiStore((state) => state.sidebarOpen);
+
+	const onNewConversation = () => {
+		useChatStore.getState().setActiveConversationId(null);
+	};
+
+	const onSwitchConversation = (conversationId: string) => {
+		useChatStore.getState().setActiveConversationId(conversationId);
+	};
 
 	return (
 		<div
@@ -29,14 +38,21 @@ export default function Sidebar() {
 					<IconButton>
 						<IoSettingsSharp />
 					</IconButton>
-					<IconButton>
+					<IconButton onClick={onNewConversation}>
 						<FaPlus />
 					</IconButton>
 				</div>
 			</nav>
-			<div className={cn('p-7', { hidden: !sidebarOpen })}>
+			<div className={cn('p-5', { hidden: !sidebarOpen })}>
 				{conversations.map((conversation) => (
-					<div key={conversation.id}>{conversation.title}</div>
+					<button
+						key={conversation.id}
+						className={cn('c-flush p-2 rounded-lg w-full text-left', {
+							active: activeConversationId === conversation.id
+						})}
+						onClick={() => onSwitchConversation(conversation.id)}>
+						{conversation.title}
+					</button>
 				))}
 			</div>
 		</div>

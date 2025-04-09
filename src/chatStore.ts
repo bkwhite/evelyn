@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export type Message = {
 	id: string;
@@ -23,33 +24,42 @@ interface ChatState {
 	addMessage: (conversationId: string, message: Message) => void;
 }
 
-export const useChatStore = create<ChatState>((set) => ({
-	draft: '',
-	conversations: [],
-	activeConversationId: null,
-	setDraft: (draft) => set({ draft }),
-	setActiveConversationId: (id) => set({ activeConversationId: id }),
-	addConversation: (conversation) =>
-		set((state) => ({
+export const useChatStore = create<ChatState>()(
+	persist(
+		(set) => ({
 			draft: '',
-			conversations: [...state.conversations, conversation],
-			activeConversationId: conversation.id
-		})),
-	addMessage: (conversationId, message) =>
-		set((state) => ({
-			draft: '',
-			conversations: state.conversations.map((conversation) =>
-				conversation.id === conversationId
-					? { ...conversation, messages: [...conversation.messages, message] }
-					: conversation
-			)
-		}))
-}));
+			conversations: [],
+			activeConversationId: null,
+			setDraft: (draft) => set({ draft }),
+			setActiveConversationId: (id) => set({ activeConversationId: id }),
+			addConversation: (conversation) =>
+				set((state) => ({
+					draft: '',
+					conversations: [...state.conversations, conversation],
+					activeConversationId: conversation.id
+				})),
+			addMessage: (conversationId, message) =>
+				set((state) => ({
+					draft: '',
+					conversations: state.conversations.map((conversation) =>
+						conversation.id === conversationId
+							? { ...conversation, messages: [...conversation.messages, message] }
+							: conversation
+					)
+				}))
+		}),
+		{
+			name: 'chat-storage',
+			storage: createJSONStorage(() => localStorage)
+		}
+	)
+);
 
 export function createConversation(message: Message): Conversation {
 	return {
 		id: crypto.randomUUID(),
-		title: `${message.content.substring(0, 20)}...`,
+		title:
+			message.content.length <= 25 ? message.content : `${message.content.substring(0, 25)}...`,
 		messages: [message]
 	};
 }
