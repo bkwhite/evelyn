@@ -1,7 +1,6 @@
 'use client';
 
 import cn from 'classnames';
-import { IoSettingsSharp } from 'react-icons/io5';
 import { FaPlus } from 'react-icons/fa6';
 
 import { useChatStore } from '@/chatStore';
@@ -13,8 +12,10 @@ export default function Sidebar() {
 	const activeConversationId = useChatStore((state) => state.activeConversationId);
 	const conversations = useChatStore((state) => state.conversations);
 	const sidebarOpen = useUiStore((state) => state.sidebarOpen);
+	const setSidebarOpen = useUiStore((state) => state.setSidebarOpen);
 
 	const onNewConversation = () => {
+		setSidebarOpen(false);
 		useChatStore.getState().setActiveConversationId(null);
 	};
 
@@ -35,15 +36,13 @@ export default function Sidebar() {
 				})}>
 				<MenuButton />
 				<div>
-					<IconButton>
-						<IoSettingsSharp />
-					</IconButton>
 					<IconButton onClick={onNewConversation}>
 						<FaPlus />
 					</IconButton>
 				</div>
 			</nav>
-			<div className={cn('p-5', { hidden: !sidebarOpen })}>
+			<div className={cn('p-5 overflow-scroll', { hidden: !sidebarOpen })}>
+				<h5 className="p-2 font-bold">Past chats</h5>
 				{conversations.map((conversation) => (
 					<button
 						key={conversation.id}

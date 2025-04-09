@@ -20,7 +20,7 @@ interface ChatState {
 	activeConversationId: string | null;
 	setDraft: (draft: string) => void;
 	setActiveConversationId: (id: string | null) => void;
-	addConversation: (conversation: Conversation) => void;
+	addConversation: (conversation: Conversation) => string;
 	addMessage: (conversationId: string, message: Message) => void;
 }
 
@@ -32,12 +32,15 @@ export const useChatStore = create<ChatState>()(
 			activeConversationId: null,
 			setDraft: (draft) => set({ draft }),
 			setActiveConversationId: (id) => set({ activeConversationId: id }),
-			addConversation: (conversation) =>
+			addConversation: (conversation) => {
 				set((state) => ({
 					draft: '',
 					conversations: [...state.conversations, conversation],
 					activeConversationId: conversation.id
-				})),
+				}));
+
+				return conversation.id;
+			},
 			addMessage: (conversationId, message) =>
 				set((state) => ({
 					draft: '',
