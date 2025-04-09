@@ -19,7 +19,7 @@ export default function Message({ message }: MessageProps) {
 				'w-fit',
 				'md:max-w-[60%]',
 				'whitespace-pre-wrap',
-				'wrap-break-word',
+
 				'flex',
 				'flex-col',
 				'gap-2',

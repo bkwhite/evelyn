@@ -15,12 +15,13 @@ export default function Sidebar() {
 	const setSidebarOpen = useUiStore((state) => state.setSidebarOpen);
 
 	const onNewConversation = () => {
-		setSidebarOpen(false);
 		useChatStore.getState().setActiveConversationId(null);
+		setSidebarOpen(false);
 	};
 
 	const onSwitchConversation = (conversationId: string) => {
 		useChatStore.getState().setActiveConversationId(conversationId);
+		setSidebarOpen(false);
 	};
 
 	return (
@@ -41,7 +42,7 @@ export default function Sidebar() {
 					</IconButton>
 				</div>
 			</nav>
-			<div className={cn('p-5 overflow-scroll', { hidden: !sidebarOpen })}>
+			<div className={cn('p-5 pt-0 overflow-scroll', { hidden: !sidebarOpen })}>
 				<h5 className="p-2 font-bold">Past chats</h5>
 				{conversations.map((conversation) => (
 					<button

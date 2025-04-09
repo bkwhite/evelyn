@@ -14,7 +14,5 @@ export async function promptGemini(input: string) {
 		contents: input
 	});
 
-	console.log(response.text);
-
 	return response.text;
 }

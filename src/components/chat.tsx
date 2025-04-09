@@ -2,7 +2,7 @@
 
 import { useChatStore } from '@/chatStore';
 import MenuButton from '@/components/menu-button';
-import MessageBox from '@/components//message-box';
+import MessageInput from '@/components/message-input';
 import MessageHistory from './message-history';
 
 export default function Chat() {
@@ -21,9 +21,9 @@ export default function Chat() {
 			</div>
 
 			<section className="flex flex-col flex-1 overflow-hidden md:self-center md:w-[90%] lg:w-[80%] xl:w-[70%]">
-				{!activeConversation ? <h3 className="self-center mt-48">Howdy!</h3> : null}
+				{!activeConversation ? <h3 className="self-center mt-48 mb-3">Hi there!</h3> : null}
 				{activeConversation && activeConversation.messages.length ? <MessageHistory /> : null}
-				<MessageBox />
+				<MessageInput />
 			</section>
 		</div>
 	);

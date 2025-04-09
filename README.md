@@ -3,9 +3,12 @@
 Evelyn is an open-source example of how to make a LLM client with Next.js.  It can be easily modified to connect with a variety of LLM APIs.
 
 ## Todo
+- [ ] Create favicon
 - [ ] Add more LLM API integrations
 - [ ] Improve message loading ui
 - [ ] Add animations to sidebar
+- [ ] Add brand icon for active LLM
+- [ ] Add LLM model selection
 
 ## Features
 - Responsive design

@@ -91,7 +91,7 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 
 	return (
 		<pre
-			className="editable-div min-h-[2rem]"
+			className="editable-div min-h-[4rem]"
 			contentEditable
 			suppressContentEditableWarning
 			ref={editorRef}

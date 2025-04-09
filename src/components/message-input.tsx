@@ -11,7 +11,7 @@ import { useUiStore } from '@/uiStore';
 
 const TALK_TO_GEMINI = true;
 
-export default function MessageBox() {
+export default function MessageInput() {
 	const editorRef = useRef<HTMLPreElement>(null);
 
 	const draft = useChatStore((state) => state.draft);
@@ -98,7 +98,7 @@ export default function MessageBox() {
 	return (
 		<div
 			className="
-      flex flex-col
+      flex flex-col gap-4
       c-input cursor-text
       p-4 m-6 mt-0
       text-sm
