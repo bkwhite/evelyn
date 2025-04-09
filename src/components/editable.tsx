@@ -10,33 +10,8 @@ type Props = {
 };
 
 export default function Editable({ editorRef, placeholder, content, onContentChange }: Props) {
-	const [isInitialized, setIsInitialized] = useState(false);
 	const localContent = useRef(content);
-
-	// Handle placeholder class
-	const handleFocus = () => {
-		if (editorRef.current && editorRef.current.textContent === '') {
-			editorRef.current.classList.remove('placeholder');
-		}
-	};
-
-	const handleBlur = () => {
-		if (editorRef.current) {
-			// Check if div is actually empty (handles the <br> case)
-			const isEmpty =
-				editorRef.current.innerHTML === '' ||
-				editorRef.current.innerHTML === '<br>' ||
-				editorRef.current.textContent === '';
-
-			if (isEmpty) {
-				editorRef.current.classList.add('placeholder');
-				// Clear the <br> if present
-				if (editorRef.current.innerHTML === '<br>') {
-					editorRef.current.innerHTML = '';
-				}
-			}
-		}
-	};
+	const [isInitialized, setIsInitialized] = useState(false);
 
 	const setContent = (target: HTMLPreElement) => {
 		const newContent = target.textContent || '';
@@ -47,9 +22,25 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 		}
 	};
 
-	// Handle input changes
 	const handleInput = (event: React.FormEvent<HTMLPreElement>) => {
 		setContent(event.target as HTMLPreElement);
+	};
+
+	const handleBlur = () => {
+		if (editorRef.current) {
+			const isEmpty =
+				editorRef.current.innerHTML === '' ||
+				editorRef.current.innerHTML === '<br>' ||
+				editorRef.current.textContent === '';
+
+			if (isEmpty) {
+				editorRef.current.classList.add('placeholder');
+
+				if (editorRef.current.innerHTML === '<br>') {
+					editorRef.current.innerHTML = '';
+				}
+			}
+		}
 	};
 
 	const handlePaste = (event: React.ClipboardEvent) => {
@@ -84,17 +75,14 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 		}
 	};
 
-	// Initialize component
 	useEffect(() => {
 		if (!editorRef.current) return;
 
-		// Set initial content
 		if (!isInitialized) {
 			editorRef.current.textContent = content;
 			localContent.current = content;
 			setIsInitialized(true);
 
-			// Add placeholder if needed
 			if (content === '') {
 				editorRef.current.classList.add('placeholder');
 			}
@@ -108,7 +96,6 @@ export default function Editable({ editorRef, placeholder, content, onContentCha
 			suppressContentEditableWarning
 			ref={editorRef}
 			onInput={handleInput}
-			onFocus={handleFocus}
 			onBlur={handleBlur}
 			onPaste={handlePaste}
 			onSubmit={handleSubmit}

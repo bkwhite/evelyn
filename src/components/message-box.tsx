@@ -96,7 +96,16 @@ export default function MessageBox() {
 	);
 
 	return (
-		<div className="flex flex-col c-input cursor-text p-4 m-6 mt-0 text-sm rounded-lg rounded-t-none top-shadow z-10">
+		<div
+			className="
+      flex flex-col
+      c-input cursor-text
+      p-4 m-6 mt-0
+      text-sm
+      rounded-lg rounded-t-none
+      top-shadow
+      z-10
+    ">
 			<Editable
 				editorRef={editorRef}
 				placeholder="What's on your mind?"

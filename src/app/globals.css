@@ -15,13 +15,6 @@
 	--t-text-tertiary: #6c6c6c; /* Disabled text */
 	--t-text-input: #ffffff; /* Input text */
 
-	--t-accent-primary: #bb86fc; /* Primary accent */
-	--t-accent-secondary: #03dac6; /* Secondary accent */
-	--t-accent-warning: #cf6679; /* Error/warning */
-
-	--t-border: #333333; /* Borders */
-	--t-shadow: rgba(0, 0, 0, 0.9); /* Shadows */
-
 	/* Theme colors */
 	--background: #121212;
 	--foreground: #e0e0e0;
@@ -63,6 +56,10 @@ pre {
 	word-wrap: break-word;
 }
 
+/**
+ * Surface styles
+ */
+
 .c-main {
 	background: var(--t-bg-primary);
 	color: var(--t-text-primary);
@@ -77,6 +74,10 @@ pre {
 	background: var(--t-bg-tertiary);
 	color: var(--t-text-secondary);
 }
+
+/**
+ * Button styles
+ */
 
 button.c-elevated {
 	color: var(--t-text-primary);
@@ -94,14 +95,13 @@ button.c-flush.active {
 	background: var(--t-bg-accent);
 }
 
+/**
+ * Input styles
+ */
+
 .c-input {
 	background: var(--t-text-primary);
 	color: var(--t-bg-primary);
-}
-
-.scrollable {
-	scrollbar-color: var(--t-bg-secondary) var(--t-bg-primary);
-	scrollbar-width: thin;
 }
 
 .editable-div {
@@ -113,6 +113,15 @@ button.c-flush.active {
 	color: var(--t-bg-input-placeholder);
 	font-style: italic;
 	pointer-events: none;
+}
+
+/**
+ * Utility styles
+ */
+
+.scrollable {
+	scrollbar-color: var(--t-bg-secondary) var(--t-bg-primary);
+	scrollbar-width: thin;
 }
 
 .top-shadow {

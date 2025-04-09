@@ -2,6 +2,11 @@
 
 Evelyn is an open-source example of how to make a LLM client with Next.js.  It can be easily modified to connect with a variety of LLM APIs.
 
+## Todo
+- [ ] Add more LLM API integrations
+- [ ] Improve message loading ui
+- [ ] Add animations to sidebar
+
 ## Features
 - Responsive design
 - Conversations stored in local storage

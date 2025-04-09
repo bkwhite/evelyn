@@ -5,18 +5,16 @@ import MenuButton from '@/components/menu-button';
 import MessageBox from '@/components//message-box';
 import MessageHistory from './message-history';
 
-function Chat(props: { className?: string }) {
-	const { className } = props;
-
-	const activeConversationId = useChatStore((state) => state.activeConversationId);
+export default function Chat() {
 	const conversations = useChatStore((state) => state.conversations);
+	const activeConversationId = useChatStore((state) => state.activeConversationId);
 
 	const activeConversation = conversations.find(
 		(conversation) => conversation.id === activeConversationId
 	);
 
 	return (
-		<div className={`c-main h-full flex flex-col ${className}`}>
+		<div className={`c-main h-full flex flex-col flex-1 w-full min-w-0`}>
 			<div className="flex flex-row items-center gap-3 p-5 z-10 bottom-shadow">
 				<MenuButton className="block md:hidden" />
 				<h2 className="text-xl font-semibold">Evelyn</h2>
@@ -30,5 +28,3 @@ function Chat(props: { className?: string }) {
 		</div>
 	);
 }
-
-export default Chat;
